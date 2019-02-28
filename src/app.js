@@ -18,17 +18,60 @@ const store = {
   todoStore
 }
 
+global.url = 'http://localhost:3000/';
+global.getData = (url)=>{
+  return Taro.request({
+    url: global.url+url
+  }).then(res=>{
+    if(res.statusCode == 200 && res.data.code == 0){
+      return res.data.data
+    }else{
+      Taro.showToast({
+        title:'出错了',
+        duration:2000
+      })
+    }
+  })
+}
+
 class App extends Component {
 
   config = {
     pages: [
-      'pages/index/index'
+      // 'pages/index/index'
+      'pages/home/home',
+      'pages/cart/cart',
+      'pages/user/user'
+
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black'
+    },
+    tabBar:{
+      selectedColor:"#b4422d",
+      list:[
+        {
+          pagePath:'pages/home/home',
+          iconPath:'./assets/home.png',
+          selectedIconPath:'./assets/home-active.png',
+          text:"首页"
+        },
+        {
+          pagePath:'pages/cart/cart',
+          iconPath:'./assets/cart.png',
+          selectedIconPath:'./assets/cart-active.png',
+          text:"购物车"
+        },
+        {
+          pagePath:'pages/user/user',
+          iconPath:'./assets/user.png',
+          selectedIconPath:'./assets/user-active.png',
+          text:"个人页"
+        }
+      ]
     }
   }
 
