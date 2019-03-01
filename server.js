@@ -45,10 +45,12 @@ app.get('/api/goods',(req,res)=>{
     const page = req.query.page || 1
     const start = (page-1)*10;
     const end = start+ 10;
-    res.json({
-        code:0,
-        data: allData.slice(start,end)
-    })
+    setTimeout(()=>{
+        res.json({
+            code:0,
+            data: allData.slice(start,end)
+        })
+    },2000);
 })
 
 app.listen(3000,()=>console.log('Example app listening on port 3000!'))

@@ -4,6 +4,7 @@ import Index from './pages/index'
 
 import counterStore from './store/counter'
 import todoStore from './store/todo'
+import cartStore from './store/cart'
 
 import './app.scss'
 
@@ -15,14 +16,21 @@ import './app.scss'
 
 const store = {
   counterStore,
-  todoStore
+  todoStore,
+  cartStore
 }
 
 global.url = 'http://localhost:3000/';
 global.getData = (url)=>{
+  Taro.showLoading({
+    title: '加载中...'
+  });
+
+
   return Taro.request({
     url: global.url+url
   }).then(res=>{
+    Taro.hideLoading();
     if(res.statusCode == 200 && res.data.code == 0){
       return res.data.data
     }else{
@@ -45,10 +53,11 @@ class App extends Component {
 
     ],
     window: {
-      backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
+      enablePullDownRefresh:true,
+      backgroundTextStyle: 'dark',
+      navigationBarBackgroundColor: '#000000',
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
+      navigationBarTextStyle: 'white'
     },
     tabBar:{
       selectedColor:"#b4422d",
